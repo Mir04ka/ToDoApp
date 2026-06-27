@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="AuthService/AuthMicroservice.csproj" Id="73607fc4-ab2f-4586-b663-b3752a93dde9" />
+  <Project Path="AuthMicroservice/AuthMicroservice.csproj" Id="dca79a50-f084-45d2-bbdd-882394f2c6f5" />
   <Project Path="ToDoApp.Application/ToDoApp.Application.csproj" Id="cac8f849-01d2-4277-b4ba-72c70e28363c" />
   <Project Path="ToDoApp.Domain/ToDoApp.Domain.csproj" Id="5faa605d-78e6-413c-ae65-5417ab14608c" />
   <Project Path="ToDoApp.Infrastructure/ToDoApp.Infrastructure.csproj" Id="e1364822-2a89-43d2-93ba-6bd460ac75fa" />

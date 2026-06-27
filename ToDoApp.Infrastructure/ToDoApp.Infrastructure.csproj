@@ -8,11 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.28" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ToDoApp.Domain\ToDoApp.Domain.csproj" />
+    <ProjectReference Include="..\ToDoApp.Application\ToDoApp.Application.csproj" />
   </ItemGroup>
 
 </Project>

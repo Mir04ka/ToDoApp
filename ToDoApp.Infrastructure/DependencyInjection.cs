@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ToDoApp.Application.Interfaces;
 using ToDoApp.Domain.Interfaces;
 using ToDoApp.Infrastructure.Data;
 using ToDoApp.Infrastructure.Repositories;
@@ -22,6 +23,9 @@ public static class DependencyInjection
 
         // File service
         services.AddScoped<IFileStorageService>(provider => new LocalFileStorageService(webRootPath));
+
+        // HttpClient & Auth service
+        services.AddHttpClient<IAuthService, ExternalAuthService>();
 
         return services;
     }

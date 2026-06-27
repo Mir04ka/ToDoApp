@@ -1,0 +1,21 @@
+﻿<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <h3 class="text-center mb-4">Auth</h3>
+                <form method="post" asp-action="Login">
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input name="username" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input name="password" type="password" class="form-control" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Log in</button>
+                    <div asp-validation-summary="All" class="text-danger mt-3 text-center"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

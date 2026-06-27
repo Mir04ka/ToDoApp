@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ToDoApp.Application.DTOs.EmployeeDto>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Сотрудники</h2>
+    <a asp-action="Create" class="btn btn-success">+ Добавить</a>
+</div>
+
+<form method="get" class="row g-2 mb-4 p-3 bg-white shadow-sm rounded">
+    <div class="col-md-5">
+        <input type="text" name="searchName" value="@ViewBag.SearchName" class="form-control" placeholder="Поиск по имени...">
+    </div>
+    <div class="col-md-5">
+        <input type="text" name="searchSpec" value="@ViewBag.SearchSpec" class="form-control" placeholder="Специальность...">
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-secondary w-100">Искать</button>
+    </div>
+</form>
+
+<div class="row">
+    @foreach (var emp in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm text-center">
+                <div class="card-body">
+                    @if (!string.IsNullOrEmpty(emp.AvatarPath))
+                    {
+                        <img src="@emp.AvatarPath" class="rounded-circle mb-3 border" style="width: 100px; height: 100px; object-fit: cover;" />
+                    }
+                    else
+                    {
+                        <div class="bg-secondary rounded-circle d-inline-block mb-3" style="width: 100px; height: 100px;"></div>
+                    }
+                    <h5 class="card-title">@emp.Name</h5>
+                    <p class="text-muted mb-1">@emp.Speciality (@emp.Age лет)</p>
+                    <hr />
+                    <p class="mb-0">Задач: <span class="badge bg-primary">@emp.TasksCount</span></p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

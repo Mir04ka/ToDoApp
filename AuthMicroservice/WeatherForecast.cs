@@ -1,4 +1,4 @@
-namespace AuthService
+namespace AuthMicroservice
 {
     public class WeatherForecast
     {
