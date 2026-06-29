@@ -15,9 +15,15 @@ public class AuthController : Controller
     public async Task<IActionResult> Login(string username, string password)
     {
         var token = await _authService.LoginAsync(username, password);
-        if (token != null)
+        if (!string.IsNullOrEmpty(token))
         {
-            HttpContext.Response.Cookies.Append("AuthToken", token, new CookieOptions { HttpOnly = true });
+            Console.WriteLine($"\nУРА! ТОКЕН ПОЛУЧЕН: {token.Substring(0, 20)}...\n");
+            HttpContext.Response.Cookies.Append("AuthToken", token, new CookieOptions 
+            { 
+                HttpOnly = true,
+                Secure = false,
+                SameSite = SameSiteMode.Lax
+            });
             return RedirectToAction("Index", "Employee");
         }
 

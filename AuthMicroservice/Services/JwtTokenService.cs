@@ -37,8 +37,8 @@ public class JwtTokenService : IJwtTokenService
         var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
         var encryptingCredentials = new EncryptingCredentials(
             encryptionKey,
-            JwtConstants.DirectKeyUseAlg,
-            SecurityAlgorithms.Aes256CbcHmacSha512);
+            SecurityAlgorithms.Aes256KW,
+            SecurityAlgorithms.Aes128CbcHmacSha256);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {

@@ -24,6 +24,8 @@ var encryptionKey = builder.Configuration["JwtConfig:EncryptionKey"]!;
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        options.UseSecurityTokenValidators = true;
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = false,
@@ -38,9 +40,28 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             OnMessageReceived = context =>
             {
-                context.Token = context.Request.Cookies["AuthToken"];
+                var tokenFromCookie = context.Request.Cookies["AuthToken"];
+                if (!string.IsNullOrEmpty(tokenFromCookie))
+                {
+                    context.Token = tokenFromCookie.Trim();
+                }
                 return Task.CompletedTask;
-            }
+            },
+
+            OnAuthenticationFailed = context =>
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"\n=== ОШИБКА ===\n{context.Exception.Message}\n==============\n");
+                Console.ResetColor();
+                return Task.CompletedTask;
+            },
+
+            OnChallenge = context =>
+            {
+                context.HandleResponse();
+                context.Response.Redirect("/Auth/Login");
+                return Task.CompletedTask;
+            },
         };
     });
 

@@ -28,8 +28,16 @@ public class ExternalAuthService : IAuthService
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<TokenResponse>();
-                return result?.Token;
+                var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var result = await response.Content.ReadFromJsonAsync<TokenResponse>(options);
+
+                if (string.IsNullOrEmpty(result?.Token))
+                {
+                    _logger.LogWarning("Token is empty");
+                    return null;
+                }
+
+                return result.Token;
             }
 
             _logger.LogWarning("Auth API returned status {StatusCode} for user {Username}", response.StatusCode, username);
