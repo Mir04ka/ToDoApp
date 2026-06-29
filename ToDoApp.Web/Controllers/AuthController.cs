@@ -17,9 +17,8 @@ public class AuthController : Controller
         var token = await _authService.LoginAsync(username, password);
         if (!string.IsNullOrEmpty(token))
         {
-            Console.WriteLine($"\nУРА! ТОКЕН ПОЛУЧЕН: {token.Substring(0, 20)}...\n");
-            HttpContext.Response.Cookies.Append("AuthToken", token, new CookieOptions 
-            { 
+            HttpContext.Response.Cookies.Append("AuthToken", token, new CookieOptions
+            {
                 HttpOnly = true,
                 Secure = false,
                 SameSite = SameSiteMode.Lax

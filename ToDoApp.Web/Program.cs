@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using ToDoApp.Application;
 using ToDoApp.Infrastructure;
@@ -21,6 +22,9 @@ builder.Services.AddInfrastructure(builder.Configuration, builder.Environment.We
 var signingKey = builder.Configuration["JwtConfig:SigningKey"]!;
 var encryptionKey = builder.Configuration["JwtConfig:EncryptionKey"]!;
 
+var signingSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
+var encryptionSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(encryptionKey));
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -32,10 +36,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey)),
-            TokenDecryptionKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(encryptionKey))
+            RequireSignedTokens = true,
+            IssuerSigningKey = signingSecurityKey,
+            TokenDecryptionKey = encryptionSecurityKey,
         };
-
+        
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = context =>
@@ -45,14 +50,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 {
                     context.Token = tokenFromCookie.Trim();
                 }
-                return Task.CompletedTask;
-            },
-
-            OnAuthenticationFailed = context =>
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\n=== ОШИБКА ===\n{context.Exception.Message}\n==============\n");
-                Console.ResetColor();
                 return Task.CompletedTask;
             },
 

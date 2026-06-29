@@ -29,10 +29,10 @@ public class JwtTokenService : IJwtTokenService
 
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, username),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.Name, username)
-        };
+        new Claim(JwtRegisteredClaimNames.Sub, username),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(ClaimTypes.Name, username)
+    };
 
         var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
         var encryptingCredentials = new EncryptingCredentials(
@@ -50,7 +50,6 @@ public class JwtTokenService : IJwtTokenService
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenDescriptor);
-
         return tokenHandler.WriteToken(token);
     }
 }
